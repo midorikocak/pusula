@@ -6,30 +6,43 @@
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 </head>
 <style>
-    #my-canvas{
+    #my-canvas {
         border: 1px solid #ababab;
         font-family: 'Indie Flower', cursive;
         color: blue;
     }
-    #indir{
+
+    #indir {
         color: blue;
         text-decoration: underline;
         cursor: pointer;
     }
 </style>
 <body>
-    <h1>Oy pusulası fotoğrafı yapıcı</h1>
-    <p>
-        Oy pusulası fotoğrafı isteyen işyerleri için, oy pusulası fotoğrafı yapıcı<br><br>
-        Oy vermek için pusulanın üzerine tıklayın.<br>
+<h1>Oy pusulası fotoğrafı yapıcı</h1>
+<p>
+    Oy pusulası fotoğrafı isteyen işyerleri için, oy pusulası fotoğrafı yapıcı<br/>
+<ul>
+    <li>
+        Oy vermek için pusulanın üzerine tıklayın.
+    </li>
+    <li>
         İsim yazmak için, isminizi yazdıktan sonra ismin görünmesini istediğiniz yere tıklayın
-    </p>
-    <button id="bastan">Baştan başla</button>
-    <a id="indir">İndir</a>
-    İsminiz: <input type="text" id="isim" /> Kimlik Yüklemek için: <input type="file" id="imageLoader" name="imageLoader"/>
-    <br/>
-    <br>
-    <canvas id="my-canvas" width="800" height="600"></canvas>
+    </li>
+    <li>
+        Resme kimlik koymak için, kimlik yükledikten sonra kimliğin görünmesini istediğiniz yere tıklayın
+    </li>
+    <li>
+        Baştan başlaya tıklayınca zemin değişir.
+    </li>
+</ul>
+</p>
+<button id="bastan">Baştan başla</button>
+<a id="indir">İndir</a>
+İsminiz: <input type="text" id="isim"/> Kimlik Yüklemek için: <input type="file" id="imageLoader" name="imageLoader"/>
+<br/>
+<br>
+<canvas id="my-canvas" width="800" height="600"></canvas>
 </body>
 <script>
 
@@ -47,21 +60,21 @@
 
         imagesLoaded += 1;
 
-        if(imagesLoaded > 2) {
-            var angle =  Math.floor(Math.random() * 10);
+        if (imagesLoaded > 2) {
+            var angle = Math.floor(Math.random() * 10);
 
-            var select =  Math.floor(Math.random() * 3);
-            if(select == 0){
+            var select = Math.floor(Math.random() * 3);
+            if (select == 0) {
                 var oybackground = wood1;
             }
-            else if(select == 1){
+            else if (select == 1) {
 
                 var oybackground = wood2;
             }
-            else if(select == 2){
+            else if (select == 2) {
                 var oybackground = wood3;
             }
-            else if(select == 3){
+            else if (select == 3) {
                 var oybackground = wood4;
             }
 
@@ -69,35 +82,34 @@
 
 
             // composite now
-            ctx.rotate(5*Math.PI/180);
+            ctx.rotate(5 * Math.PI / 180);
             ctx.drawImage(oybackground, -100, -100);
-            ctx.rotate(-5*Math.PI/180);
+            ctx.rotate(-5 * Math.PI / 180);
             //ctx.globalAlpha = 0.5;
             ctx.save();
             ctx.shadowColor = '#555555'; // green for demo purposes
             ctx.shadowBlur = 10;
             ctx.shadowOffsetX = 0;
             ctx.shadowOffsetY = 0;
-            ctx.rotate(angle*Math.PI/180);
-            ctx.drawImage(img2, canvas.width/2 - img2.width/2, canvas.height/2 - img2.height/2 -50);
-            ctx.rotate(-angle*Math.PI/180);
+            ctx.rotate(angle * Math.PI / 180);
+            ctx.drawImage(img2, canvas.width / 2 - img2.width / 2, canvas.height / 2 - img2.height / 2 - 50);
+            ctx.rotate(-angle * Math.PI / 180);
 
             ctx.restore();
         }
     }
 
-    function handleImage(e){
+    function handleImage(e) {
         var reader = new FileReader();
-        reader.onload = function(event){
+        reader.onload = function (event) {
             var img = new Image();
-            img.onload = function(){
+            img.onload = function () {
                 kimlik = img;
             }
             img.src = event.target.result;
         }
         reader.readAsDataURL(e.target.files[0]);
     }
-
 
 
     var imagesLoaded = 0;
@@ -119,47 +131,47 @@
     var secildi = false;
 
 
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
 
         var imageLoader = document.getElementById('imageLoader');
         imageLoader.addEventListener('change', handleImage, false);
 
-        canvas.addEventListener('click', function(evt) {
+        canvas.addEventListener('click', function (evt) {
 
             var rect = canvas.getBoundingClientRect();
             var x = evt.clientX - rect.left;
-            var y= evt.clientY - rect.top;
+            var y = evt.clientY - rect.top;
 
-            console.log('x:'+x+' y:'+y);
-            var angle2 =  Math.floor(Math.random() * 50);
+            console.log('x:' + x + ' y:' + y);
+            var angle2 = Math.floor(Math.random() * 50);
 
             var isim = document.getElementById('isim').value;
 
-            if(secildi==false){
+            if (secildi == false) {
                 // draw the image
                 // since the context is rotated, the image will be rotated also
                 ctx.save();
                 ctx.translate(x, y);
-                ctx.rotate(angle2*Math.PI/180);
-                ctx.drawImage(tercih,0,0,50,50);
+                ctx.rotate(angle2 * Math.PI / 180);
+                ctx.drawImage(tercih, 0, 0, 50, 50);
                 ctx.restore();
                 secildi = true;
             }
-            else if(secildi==true && isim!='' && isimResimde==false){
+            else if (secildi == true && isim != '' && isimResimde == false) {
                 // draw the image
                 // since the context is rotated, the image will be rotated also
                 ctx.save();
                 ctx.translate(x, y);
 
-                var angle3 =  Math.floor(Math.random() * 10);
-                ctx.rotate(angle3*Math.PI/180);
+                var angle3 = Math.floor(Math.random() * 10);
+                ctx.rotate(angle3 * Math.PI / 180);
 
                 ctx.save();
                 ctx.shadowColor = '#555555'; // green for demo purposes
                 ctx.shadowBlur = 10;
                 ctx.shadowOffsetX = 0;
                 ctx.shadowOffsetY = 0;
-                ctx.drawImage(papers, 0,0, 300,100);
+                ctx.drawImage(papers, 0, 0, 300, 100);
 
                 ctx.restore();
 
@@ -170,20 +182,20 @@
                 ctx.restore();
                 isimResimde = true;
             }
-            else if(secildi==true && kimlik!=null && kimlikResimde== false){
+            else if (secildi == true && kimlik != null && kimlikResimde == false) {
                 // draw the image
                 // since the context is rotated, the image will be rotated also
                 ctx.save();
                 ctx.translate(x, y);
 
-                var angle3 =  Math.floor(Math.random() * 30);
-                ctx.rotate(angle3*Math.PI/180);
+                var angle3 = Math.floor(Math.random() * 30);
+                ctx.rotate(angle3 * Math.PI / 180);
 
                 ctx.shadowColor = '#333333'; // green for demo purposes
                 ctx.shadowBlur = 20;
                 ctx.shadowOffsetX = 0;
                 ctx.shadowOffsetY = 0;
-                ctx.drawImage(kimlik, 0,0, 332,450);
+                ctx.drawImage(kimlik, 0, 0, 332, 450);
 
                 ctx.restore();
                 kimlikResimde = true;
@@ -196,7 +208,7 @@
     });
 
     var bastan = document.getElementById("bastan");
-    bastan.addEventListener('click', function(evt) {
+    bastan.addEventListener('click', function (evt) {
         secildi = false;
         kimlikResimde = false;
         isimResimde = false;
@@ -211,11 +223,11 @@
         link.download = filename;
     }
 
-    indir.addEventListener('click', function(evt) {
+    indir.addEventListener('click', function (evt) {
         downloadCanvas(this, 'my-canvas', 'oy.png');
     });
 
-    function drawCanvas(){
+    function drawCanvas() {
         main();
     }
 
