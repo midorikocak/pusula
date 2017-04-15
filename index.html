@@ -222,6 +222,7 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
                 idcard.drawFunc = function(){ drawShadow(idcard, '#333333', 20); };
                 kimlikResimde = true;
             }
+            drawCanvas();
         }, false);
 
         canvas.addEventListener('mousedown', function (evt) {
