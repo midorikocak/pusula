@@ -114,6 +114,7 @@
     var papers = loadImage('paper.png', main);
     var kimlik = null;
     var kimlikResimde = false;
+    var isimResimde = false;
 
     var secildi = false;
 
@@ -144,7 +145,7 @@
                 ctx.restore();
                 secildi = true;
             }
-            else if(secildi==true && isim!=''){
+            else if(secildi==true && isim!='' && isimResimde==false){
                 // draw the image
                 // since the context is rotated, the image will be rotated also
                 ctx.save();
@@ -167,7 +168,7 @@
                 ctx.fillStyle = "#284283";
                 ctx.fillText(isim, 60, 60);
                 ctx.restore();
-                secildi = -1;
+                isimResimde = true;
             }
             else if(secildi==true && kimlik!=null && kimlikResimde== false){
                 // draw the image
@@ -198,6 +199,7 @@
     bastan.addEventListener('click', function(evt) {
         secildi = false;
         kimlikResimde = false;
+        isimResimde = false;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawCanvas();
     });
