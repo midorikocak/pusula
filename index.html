@@ -126,9 +126,10 @@ Zarflı zemin: <input type="checkbox" id="zarf">
             var zarflizemin = document.getElementById('zarf');
             if(zarflizemin.checked == true){
                 var angle24 = Math.floor(Math.random() * 10);
+                var distance = angle24 * 20;
                 ctx.rotate(angle24 * Math.PI / 180);
 
-                ctx.drawImage(zarf, canvas.width / 2 - zarf.width / 2, canvas.height / 2 - zarf.height / 2 - 50);
+                ctx.drawImage(zarf, (canvas.width / 2 - zarf.width / 2)+distance,( canvas.height / 2 - zarf.height / 2 +distance));
                 ctx.rotate(-angle24 * Math.PI / 180);
             }
 
