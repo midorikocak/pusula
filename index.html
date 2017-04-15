@@ -125,20 +125,26 @@ Zarflı zemin: <input type="checkbox" id="zarf">
 
             var zarflizemin = document.getElementById('zarf');
             if(zarflizemin.checked == true){
+                ctx.save();
                 var angle24 = Math.floor(Math.random() * 10);
                 var distance = angle24 * 20;
                 ctx.rotate(angle24 * Math.PI / 180);
 
+                ctx.shadowColor = '#000'; // green for demo purposes
+                ctx.shadowBlur = shadowBlur;
+                ctx.shadowOffsetX = shadowOffsetX;
+                ctx.shadowOffsetY = shadowOffsetY;
                 ctx.drawImage(zarf, (canvas.width / 2 - zarf.width / 2)+distance,( canvas.height / 2 - zarf.height / 2 +distance));
                 ctx.rotate(-angle24 * Math.PI / 180);
+                ctx.restore();
             }
 
             //ctx.globalAlpha = 0.5;
             ctx.save();
-            ctx.shadowColor = '#555555'; // green for demo purposes
-            ctx.shadowBlur = 10;
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 0;
+            ctx.shadowColor = '#000'; // green for demo purposes
+            ctx.shadowBlur = shadowBlur;
+            ctx.shadowOffsetX = shadowOffsetX;
+            ctx.shadowOffsetY = shadowOffsetY;
             ctx.rotate(angle * Math.PI / 180);
             ctx.drawImage(img2, canvas.width / 2 - img2.width / 2, canvas.height / 2 - img2.height / 2 - 50);
             ctx.rotate(-angle * Math.PI / 180);
@@ -177,6 +183,10 @@ Zarflı zemin: <input type="checkbox" id="zarf">
     var wood8 = loadImage('wood8.jpg', main);
     var img2 = loadImage('pusula.png', main);
     var papers = loadImage('paper.png', main);
+
+    var shadowBlur = 5;
+    var shadowOffsetX = 1;
+    var shadowOffsetY = 1;
     var kimlik = null;
     var kimlikResimde = false;
     var isimResimde = false;
@@ -220,10 +230,10 @@ Zarflı zemin: <input type="checkbox" id="zarf">
                 ctx.rotate(angle3 * Math.PI / 180);
 
                 ctx.save();
-                ctx.shadowColor = '#555555'; // green for demo purposes
-                ctx.shadowBlur = 10;
-                ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 0;
+                ctx.shadowColor = '#000'; // green for demo purposes
+                ctx.shadowBlur = shadowBlur;
+                ctx.shadowOffsetX = shadowOffsetX;
+                ctx.shadowOffsetY = shadowOffsetY;
                 ctx.drawImage(papers, 0, 0, 300, 100);
 
                 ctx.restore();
@@ -244,10 +254,10 @@ Zarflı zemin: <input type="checkbox" id="zarf">
                 var angle3 = Math.floor(Math.random() * 30);
                 ctx.rotate(angle3 * Math.PI / 180);
 
-                ctx.shadowColor = '#333333'; // green for demo purposes
-                ctx.shadowBlur = 20;
-                ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 0;
+                ctx.shadowColor = '#000'; // green for demo purposes
+                ctx.shadowBlur = shadowBlur;
+                ctx.shadowOffsetX = shadowOffsetX;
+                ctx.shadowOffsetY = shadowOffsetY;
                 ctx.drawImage(kimlik, 0, 0, 332, 450);
 
                 ctx.restore();
