@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 </head>
 <style>
-    #myCanvas{
+    #my-canvas{
         border: 1px solid #ababab;
+        font-family: 'Indie Flower', cursive;
+        color: blue;
     }
     #indir{
         color: blue;
@@ -18,10 +21,13 @@
     <h1>Oy pusulası fotoğrafı yapıcı</h1>
     <p>
         Oy pusulası fotoğrafı isteyen işyerleri için, oy pusulası fotoğrafı yapıcı<br><br>
-        Oy vermek için pusulanın üzerine tıklayın.
+        Oy vermek için pusulanın üzerine tıklayın.<br>
+        İsim yazmak için, isminizi yazdıktan sonra ismin görünmesini istediğiniz yere tıklayın
     </p>
     <button id="bastan">Baştan başla</button>
-    <a id="indir">İndir</a><br/>
+    <a id="indir">İndir</a>
+    İsminiz: <input type="text" id="isim" />
+    <br/>
     <br>
     <canvas id="my-canvas" width="800" height="600"></canvas>
 </body>
@@ -67,6 +73,7 @@
             ctx.drawImage(oybackground, -100, -100);
             ctx.rotate(-5*Math.PI/180);
             //ctx.globalAlpha = 0.5;
+            ctx.save();
             ctx.shadowColor = '#555555'; // green for demo purposes
             ctx.shadowBlur = 10;
             ctx.shadowOffsetX = 0;
@@ -74,6 +81,7 @@
             ctx.rotate(angle*Math.PI/180);
             ctx.drawImage(img2, canvas.width/2 - img2.width/2, canvas.height/2 - img2.height/2 -50);
             ctx.rotate(-angle*Math.PI/180);
+
             ctx.restore();
         }
     }
@@ -91,6 +99,9 @@
     var wood3 = loadImage('wood3.jpg', main);
     var wood4 = loadImage('wood4.jpg', main);
     var img2 = loadImage('pusula.png', main);
+    var paper = loadImage('paper.png', main);
+
+    var secildi = false;
 
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -105,13 +116,42 @@
             var angle2 =  Math.floor(Math.random() * 50);
 
 
-            // draw the image
-            // since the context is rotated, the image will be rotated also
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.rotate(angle2*Math.PI/180);
-            ctx.drawImage(tercih,0,0,50,50);
-            ctx.restore();
+            if(secildi==false){
+                // draw the image
+                // since the context is rotated, the image will be rotated also
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(angle2*Math.PI/180);
+                ctx.drawImage(tercih,0,0,50,50);
+                ctx.restore();
+                secildi = true;
+            }
+            else if(secildi==true){
+                // draw the image
+                // since the context is rotated, the image will be rotated also
+                ctx.save();
+                ctx.translate(x, y);
+
+                var angle3 =  Math.floor(Math.random() * 10);
+                ctx.rotate(angle3*Math.PI/180);
+
+                ctx.save();
+                ctx.shadowColor = '#555555'; // green for demo purposes
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+                ctx.drawImage(paper, 0,0, 300,100);
+
+                ctx.restore();
+
+                ctx.font = '30px "Indie Flower"';
+                var isim = document.getElementById('isim').value;
+                ctx.fillStyle = "#284283";
+                ctx.fillText(isim, 60, 60);
+                ctx.restore();
+                secildi = -1;
+            }
+
 
         }, false);
 
@@ -119,8 +159,8 @@
     });
 
     var bastan = document.getElementById("bastan");
-
     bastan.addEventListener('click', function(evt) {
+        secildi = false;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawCanvas();
     });
