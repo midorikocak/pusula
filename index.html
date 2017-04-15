@@ -115,6 +115,7 @@
             console.log('x:'+x+' y:'+y);
             var angle2 =  Math.floor(Math.random() * 50);
 
+            var isim = document.getElementById('isim').value;
 
             if(secildi==false){
                 // draw the image
@@ -126,7 +127,7 @@
                 ctx.restore();
                 secildi = true;
             }
-            else if(secildi==true){
+            else if(secildi==true && isim!=''){
                 // draw the image
                 // since the context is rotated, the image will be rotated also
                 ctx.save();
