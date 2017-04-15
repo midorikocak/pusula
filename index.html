@@ -113,6 +113,7 @@
     var img2 = loadImage('pusula.png', main);
     var papers = loadImage('paper.png', main);
     var kimlik = null;
+    var kimlikResimde = false;
 
     var secildi = false;
 
@@ -168,7 +169,7 @@
                 ctx.restore();
                 secildi = -1;
             }
-            else if(secildi==true && kimlik!=null){
+            else if(secildi==true && kimlik!=null && kimlikResimde== false){
                 // draw the image
                 // since the context is rotated, the image will be rotated also
                 ctx.save();
@@ -184,7 +185,7 @@
                 ctx.drawImage(kimlik, 0,0, 332,450);
 
                 ctx.restore();
-
+                kimlikResimde = true;
             }
 
 
@@ -196,6 +197,7 @@
     var bastan = document.getElementById("bastan");
     bastan.addEventListener('click', function(evt) {
         secildi = false;
+        kimlikResimde = false;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawCanvas();
     });
