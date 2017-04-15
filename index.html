@@ -81,7 +81,7 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
         if (imagesLoaded > 2) {
             var angle = Math.floor(Math.random() * 10);
 
-            var select = Math.floor(Math.random() * 3);
+            var select = Math.floor(Math.random() * 7);
             if (select == 0) {
                 var oybackground = wood1;
             }
@@ -94,6 +94,18 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
             }
             else if (select == 3) {
                 var oybackground = wood4;
+            }
+            else if (select == 4) {
+                var oybackground = wood5;
+            }
+            else if (select == 5) {
+                var oybackground = wood6;
+            }
+            else if (select == 6) {
+                var oybackground = wood7;
+            }
+            else if (select == 7) {
+                var oybackground = wood8;
             }
 
             console.log(select);
@@ -140,6 +152,10 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
     var wood2 = loadImage('wood2.jpg', main);
     var wood3 = loadImage('wood3.jpg', main);
     var wood4 = loadImage('wood4.jpg', main);
+    var wood5 = loadImage('wood5.jpg', main);
+    var wood6 = loadImage('wood6.jpg', main);
+    var wood7 = loadImage('wood7.jpg', main);
+    var wood8 = loadImage('wood8.jpg', main);
     var img2 = loadImage('pusula.png', main);
     var papers = loadImage('paper.png', main);
     var kimlik = null;
