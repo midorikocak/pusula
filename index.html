@@ -51,14 +51,28 @@
         Mobilden inmiyorsa ekran resmi alın.
     </li>
     <li>
+        Masanın üzerinde zarf olsun istiyorsanız, zarf kutusunu işaretleyin. Baştan başlaya tıklayın.
+    </li>
+    <li>
         Baştan başlaya tıklayınca zemin değişir.
     </li>
 </ul>
 </p>
+Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" name="imageLoader"/>
+<br/><br/>
+
+Özel kağıt, resim, kartvizit yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader2" name="imageLoader2"/><br/>
+<br>
+Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkbox" id="golge">
+<br>
+<br>
+
+İsminiz (İsteğe bağlı): <input type="text" id="isim"/>
+<br>
+<br>
 <button id="bastan">Baştan başla</button>
 <a id="indir">İndir</a>
-Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" name="imageLoader"/>
-İsminiz (İsteğe bağlı): <input type="text" id="isim"/> <br/>
+<br>
 <br>
 <canvas id="my-canvas" width="800" height="600"></canvas>
 </body>
@@ -66,6 +80,7 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
     var canvas = document.getElementById("my-canvas");
     var ctx = canvas.getContext("2d");
     var imgs = [], grab;
+    var shadowBlur = 0, shadowOffsetX = 0, shadowOffsetY = 0;
     /* x, y: coords. w, h: width, height.
      * angle: rotation around origin. drag: can we drag this? loadedImage: Image, drawFunc: update function */
     function Img(x, y, w, h, angle, drag, loadedImage){
@@ -88,14 +103,14 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
         ctx.restore();
     }
 
-    function drawShadow(img, shadowColor, shadowBlur){
+    function drawShadow(img, shadowColor){
         ctx.save();
         ctx.translate(img.x, img.y);
         ctx.rotate(img.angle);
         ctx.shadowColor = shadowColor;
         ctx.shadowBlur = shadowBlur;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 0;
+        ctx.shadowOffsetX = shadowOffsetX;
+        ctx.shadowOffsetY = shadowOffsetY;
         ctx.drawImage(img.loadedImage, 0, 0, img.w, img.h);
         ctx.restore();
     }
@@ -117,36 +132,36 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
         return img;
     }
 
-    function main() {
-        imagesLoaded += 1;
-
-        if (imagesLoaded > 4) {
-            var angle = Math.floor(Math.random() * 10);
-
-            var select = Math.floor(Math.random() * 3);
-            if (select == 0) {
-                var oybackground = wood1;
-            }
-            else if (select == 1) {
-                var oybackground = wood2;
-            }
-            else if (select == 2) {
-                var oybackground = wood3;
-            }
-            else if (select == 3) {
-                var oybackground = wood4;
-            }
-
-            console.log(select);
-
-            bg = new Img(-100, -100, oybackground.width, oybackground.height,
-            			5*Math.PI/180, false, oybackground);
-            bg.drawFunc = function(){ drawPlain(bg); };
-
-            ballot = new Img(canvas.width/2 - img2.width/2, canvas.height/2 - img2.height/2 - 50,
-            				img2.width, img2.height, angle*Math.PI/180, true, img2);
-            ballot.drawFunc = function(){ drawShadow(ballot, '#555555', 10); }
+    document.getElementById("golge").addEventListener("onchange", function () {
+        if (this.checked) {
+            shadowBlur = 5; shadowOffsetX = 1; shadowOffsetY = 1;
+        } else {
+            shadowBlur = 0; shadowOffsetX = 0; shadowOffsetY = 0;
         }
+    });
+
+    function main() {
+        var angle = Math.floor(Math.random() * 10);
+        
+        var imgs = [wood1, wood2, wood3, wood4, wood5, wood6, wood7, wood8];
+        oybackground = imgs[Math.floor(Math.random() * imgs.length)];
+
+        bg = new Img(-100, -100, oybackground.width, oybackground.height,
+            			5*Math.PI/180, false, oybackground);
+        bg.drawFunc = function(){ drawPlain(bg); };
+
+        var zarflizemin = document.getElementById('zarf');
+        if(zarflizemin.checked == true){
+            var angle24 = Math.floor(Math.random() * 10);
+            var distance = angle24 * 20;
+            envelope = new Img(canvas.width/2 - zarf.width/2 + d, canvas.height/2 - zarf.height/2 + d,
+                					zarf.width, zarf.height, -angle24 * Math.PI/180, true, zarf);
+            envelope.drawFunc = function(){ drawShadow(envelope, '#000'); }
+        }
+
+        ballot = new Img(canvas.width/2 - img2.width/2, canvas.height/2 - img2.height/2 - 50,
+            				img2.width, img2.height, angle*Math.PI/180, true, img2);
+        ballot.drawFunc = function(){ drawShadow(ballot, '#000'); }
     }
 
     function handleImage(e) {
@@ -161,18 +176,46 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
         reader.readAsDataURL(e.target.files[0]);
     }
 
+    function handleImage2(e) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var img = new Image();
+            img.onload = function () {
+                ozel = img;
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0]);
+    }
 
     var imagesLoaded = 0;
 
-    var tercih = loadImage('tercih.png', main);
-    var wood1 = loadImage('wood1.jpg', main);
-    var wood2 = loadImage('wood2.jpg', main);
-    var wood3 = loadImage('wood3.jpg', main);
-    var wood4 = loadImage('wood4.jpg', main);
-    var img2 = loadImage('pusula.png', drawCanvas);
-    var papers = loadImage('paper.png', drawCanvas);
+    var tercih = loadImage('tercih.png', null);
+    var zarf =  loadImage('zarf.png', null);
+    var wood1 = loadImage('wood1.jpg', null);
+    var wood2 = loadImage('wood2.jpg', null);
+    var wood3 = loadImage('wood3.jpg', null);
+    var wood4 = loadImage('wood4.jpg', null);
+    var wood5 = loadImage('wood5.jpg', null);
+    var wood6 = loadImage('wood6.jpg', null);
+    var wood7 = loadImage('wood7.jpg', null);
+    var wood8 = loadImage('wood8.jpg', null);
+    var img2 = loadImage('pusula.png', null);
+    var papers = loadImage('paper.png', null);
+    main();
+
+    var golge = document.getElementById('golge');
+
+    var shadowBlur = 0;
+    var shadowOffsetX = 0;
+    var shadowOffsetY = 0;
+
     var kimlik = null;
     var kimlikResimde = false;
+
+    var ozel = null;
+    var ozelResimde = false;
+
     var isimResimde = false;
 
     var secildi = false;
@@ -181,6 +224,10 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
 
         var imageLoader = document.getElementById('imageLoader');
         imageLoader.addEventListener('change', handleImage, false);
+
+        var imageLoader2 = document.getElementById('imageLoader2');
+        imageLoader2.addEventListener('change', handleImage2, false);
+
 
         canvas.addEventListener('click', function (evt) {
 
@@ -195,7 +242,7 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
 
             if (secildi == false) {
                 /* tercih */
-                stamp = new Img(x, y, 50, 50, angle2*Math.PI/180, true, tercih);
+                stamp = new Img(x, y, 70, 70, angle2*Math.PI/180, true, tercih);
                 stamp.drawFunc = function(){ drawPlain(stamp); };
                 secildi = true;
             }
@@ -219,10 +266,15 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
             else if (secildi == true && kimlik != null && kimlikResimde == false) {
                 var angle3 = Math.floor(Math.random() * 30);
                 idcard = new Img(x, y, 332, 450, angle3*Math.PI/180, true, kimlik);
-                idcard.drawFunc = function(){ drawShadow(idcard, '#333333', 20); };
+                idcard.drawFunc = function(){ drawShadow(idcard, '#000'); };
                 kimlikResimde = true;
             }
-            drawCanvas();
+            else if (secildi == true && ozel != null && ozelResimde == false) {
+                var angle3 = Math.floor(Math.random() * 30);
+                extra = new Img(x, y, ozel.width, ozel.height, angle3*Math.PI/180, true, ozel);
+                extra.drawFunc = function(){ drawShadow(extra, '#000'); };
+                ozelResimde = true;
+            }
         }, false);
 
         canvas.addEventListener('mousedown', function (evt) {
@@ -267,6 +319,7 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
         secildi = false;
         kimlikResimde = false;
         isimResimde = false;
+        ozelResimde = false;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         main();
         drawCanvas();
