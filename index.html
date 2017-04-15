@@ -63,6 +63,49 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
 <canvas id="my-canvas" width="800" height="600"></canvas>
 </body>
 <script>
+    var canvas = document.getElementById("my-canvas");
+    var ctx = canvas.getContext("2d");
+    var imgs = [], grab;
+    /* x, y: coords. w, h: width, height.
+     * angle: rotation around origin. drag: can we drag this? loadedImage: Image, drawFunc: update function */
+    function Img(x, y, w, h, angle, drag, loadedImage){
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.angle = angle;
+        this.drag = drag;
+        this.loadedImage = loadedImage;
+        this.drawFunc = function(){ console.log("no drawFunc set", this); };
+        imgs.push(this);
+    }
+
+    function drawPlain(img){
+        ctx.save();
+        ctx.translate(img.x, img.y);
+        ctx.rotate(img.angle);
+        ctx.drawImage(img.loadedImage, 0, 0, img.w, img.h);
+        ctx.restore();
+    }
+
+    function drawShadow(img, shadowColor, shadowBlur){
+        ctx.save();
+        ctx.translate(img.x, img.y);
+        ctx.rotate(img.angle);
+        ctx.shadowColor = shadowColor;
+        ctx.shadowBlur = shadowBlur;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.drawImage(img.loadedImage, 0, 0, img.w, img.h);
+        ctx.restore();
+    }
+
+    function rotatePoint(x, y, theta){
+        var out = {};
+        out.x = Math.cos(theta) * x - Math.sin(theta) * y;
+        out.y = Math.sin(theta) * x + Math.cos(theta) * y;
+        return out;
+    }
 
     function loadImage(src, onload) {
         // http://www.thefutureoftheweb.com/blog/image-onload-isnt-being-called
@@ -75,10 +118,9 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
     }
 
     function main() {
-
         imagesLoaded += 1;
 
-        if (imagesLoaded > 2) {
+        if (imagesLoaded > 4) {
             var angle = Math.floor(Math.random() * 10);
 
             var select = Math.floor(Math.random() * 3);
@@ -86,7 +128,6 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
                 var oybackground = wood1;
             }
             else if (select == 1) {
-
                 var oybackground = wood2;
             }
             else if (select == 2) {
@@ -98,22 +139,13 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
 
             console.log(select);
 
+            bg = new Img(-100, -100, oybackground.width, oybackground.height,
+            			5*Math.PI/180, false, oybackground);
+            bg.drawFunc = function(){ drawPlain(bg); };
 
-            // composite now
-            ctx.rotate(5 * Math.PI / 180);
-            ctx.drawImage(oybackground, -100, -100);
-            ctx.rotate(-5 * Math.PI / 180);
-            //ctx.globalAlpha = 0.5;
-            ctx.save();
-            ctx.shadowColor = '#555555'; // green for demo purposes
-            ctx.shadowBlur = 10;
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 0;
-            ctx.rotate(angle * Math.PI / 180);
-            ctx.drawImage(img2, canvas.width / 2 - img2.width / 2, canvas.height / 2 - img2.height / 2 - 50);
-            ctx.rotate(-angle * Math.PI / 180);
-
-            ctx.restore();
+            ballot = new Img(canvas.width/2 - img2.width/2, canvas.height/2 - img2.height/2 - 50,
+            				img2.width, img2.height, angle*Math.PI/180, true, img2);
+            ballot.drawFunc = function(){ drawShadow(ballot, '#555555', 10); }
         }
     }
 
@@ -131,23 +163,19 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
 
 
     var imagesLoaded = 0;
-    var canvas = document.getElementById("my-canvas");
-    var ctx = canvas.getContext("2d");
 
     var tercih = loadImage('tercih.png', main);
-
     var wood1 = loadImage('wood1.jpg', main);
     var wood2 = loadImage('wood2.jpg', main);
     var wood3 = loadImage('wood3.jpg', main);
     var wood4 = loadImage('wood4.jpg', main);
-    var img2 = loadImage('pusula.png', main);
-    var papers = loadImage('paper.png', main);
+    var img2 = loadImage('pusula.png', drawCanvas);
+    var papers = loadImage('paper.png', drawCanvas);
     var kimlik = null;
     var kimlikResimde = false;
     var isimResimde = false;
 
     var secildi = false;
-
 
     document.addEventListener("DOMContentLoaded", function () {
 
@@ -166,71 +194,79 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
             var isim = document.getElementById('isim').value;
 
             if (secildi == false) {
-                // draw the image
-                // since the context is rotated, the image will be rotated also
-                ctx.save();
-                ctx.translate(x, y);
-                ctx.rotate(angle2 * Math.PI / 180);
-                ctx.drawImage(tercih, 0, 0, 50, 50);
-                ctx.restore();
+                /* tercih */
+                stamp = new Img(x, y, 50, 50, angle2*Math.PI/180, true, tercih);
+                stamp.drawFunc = function(){ drawPlain(stamp); };
                 secildi = true;
             }
             else if (secildi == true && isim != '' && isimResimde == false) {
-                // draw the image
-                // since the context is rotated, the image will be rotated also
-                ctx.save();
-                ctx.translate(x, y);
-
+                /* name paper */
                 var angle3 = Math.floor(Math.random() * 10);
-                ctx.rotate(angle3 * Math.PI / 180);
-
-                ctx.save();
-                ctx.shadowColor = '#555555'; // green for demo purposes
-                ctx.shadowBlur = 10;
-                ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 0;
-                ctx.drawImage(papers, 0, 0, 300, 100);
-
-                ctx.restore();
-
-                ctx.font = '30px "AHundredMiles"';
-                var isim = document.getElementById('isim').value;
-                ctx.fillStyle = "#284283";
-                ctx.fillText(isim, 60, 60);
-                ctx.restore();
+                paper = new Img(x, y, 300, 100, angle3*Math.PI/180, true, papers);
+                paper.drawFunc = function(){
+                    drawShadow(paper, '#555555', 10);
+                    ctx.save();
+                    ctx.translate(paper.x, paper.y);
+                    ctx.rotate(paper.angle);
+                    ctx.font = '30px "AHundredMiles"';
+                    var isim = document.getElementById('isim').value;
+                    ctx.fillStyle = "#284283";
+                    ctx.fillText(isim, 60, 60);
+                    ctx.restore();
+                };
                 isimResimde = true;
             }
             else if (secildi == true && kimlik != null && kimlikResimde == false) {
-                // draw the image
-                // since the context is rotated, the image will be rotated also
-                ctx.save();
-                ctx.translate(x, y);
-
                 var angle3 = Math.floor(Math.random() * 30);
-                ctx.rotate(angle3 * Math.PI / 180);
-
-                ctx.shadowColor = '#333333'; // green for demo purposes
-                ctx.shadowBlur = 20;
-                ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 0;
-                ctx.drawImage(kimlik, 0, 0, 332, 450);
-
-                ctx.restore();
+                idcard = new Img(x, y, 332, 450, angle3*Math.PI/180, true, kimlik);
+                idcard.drawFunc = function(){ drawShadow(idcard, '#333333', 20); };
                 kimlikResimde = true;
             }
-
-
         }, false);
 
+        canvas.addEventListener('mousedown', function (evt) {
+            var i;
+            var rect = canvas.getBoundingClientRect();
+            var canvasX = evt.clientX - rect.left;
+            var canvasY = evt.clientY - rect.top;
+            for (i=0; i<imgs.length; i++) {
+                if (imgs[i].drag == false) continue;
+                var rot = rotatePoint(canvasX - imgs[i].x, canvasY - imgs[i].y, imgs[i].angle*-1);
+                var imageX = rot.x;
+                var imageY = rot.y;
+                if (imageX < 0 || imageX > imgs[i].w || imageY < 0 || imageY > imgs[i].h) continue; /* click is outside image */
+                grab = {};
+                grab.img = imgs[i];
+                grab.origX = imgs[i].x;
+                grab.origY = imgs[i].y;
+                grab.origMouseX = evt.clientX;
+                grab.origMouseY = evt.clientY;
+            }
+            drawCanvas();
+        });
+        
+        canvas.addEventListener('mouseup', function (evt) {
+            grab = null;
+        });
+        
+        canvas.addEventListener('mousemove', function (evt) {
+            if (grab != null) {
+                grab.img.x = grab.origX - (grab.origMouseX - evt.clientX);
+                grab.img.y = grab.origY - (grab.origMouseY - evt.clientY);
+                drawCanvas();
+            }
+        });
         drawCanvas();
     });
 
     var bastan = document.getElementById("bastan");
     bastan.addEventListener('click', function (evt) {
+        imgs = [];
         secildi = false;
         kimlikResimde = false;
         isimResimde = false;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        main();
         drawCanvas();
     });
 
@@ -246,7 +282,11 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
     });
 
     function drawCanvas() {
-        main();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var i;
+        for(i=0; i<imgs.length; i++){
+            imgs[i].drawFunc();
+        }
     }
 
 </script>
