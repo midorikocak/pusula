@@ -65,7 +65,7 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
 
 Özel kağıt, resim, kartvizit yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader2" name="imageLoader2"/><br/>
 <br>
-Zarflı zemin: <input type="checkbox" id="zarf"> Gölge yok: <input type="checkbox" id="golge">
+Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkbox" id="golge">
 <br>
 <br>
 <canvas id="my-canvas" width="800" height="600"></canvas>
@@ -84,7 +84,7 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge yok: <input type="checkb
 
     function main() {
 
-        if(golge.checked == true) {
+        if(golge.checked == false) {
             shadowBlur = 0;
             shadowOffsetX = 0;
             shadowOffsetY = 0;
@@ -211,9 +211,9 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge yok: <input type="checkb
 
     var golge = document.getElementById('golge');
 
-    var shadowBlur = 5;
-    var shadowOffsetX = 1;
-    var shadowOffsetY = 1;
+    var shadowBlur = 0;
+    var shadowOffsetX = 0;
+    var shadowOffsetY = 0;
 
     var kimlik = null;
     var kimlikResimde = false;
