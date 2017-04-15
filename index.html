@@ -51,6 +51,9 @@
         Mobilden inmiyorsa ekran resmi alın.
     </li>
     <li>
+        Masanın üzerinde zarf olsun istiyorsanız, zarf kutusunu işaretleyin.
+    </li>
+    <li>
         Baştan başlaya tıklayınca zemin değişir.
     </li>
 </ul>
@@ -59,6 +62,9 @@
 <a id="indir">İndir</a>
 Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" name="imageLoader"/>
 İsminiz (İsteğe bağlı): <input type="text" id="isim"/> <br/>
+<br>
+Zarflı zemin: <input type="checkbox" id="zarf">
+<br>
 <br>
 <canvas id="my-canvas" width="800" height="600"></canvas>
 </body>
@@ -115,6 +121,17 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
             ctx.rotate(5 * Math.PI / 180);
             ctx.drawImage(oybackground, -100, -100);
             ctx.rotate(-5 * Math.PI / 180);
+
+
+            var zarflizemin = document.getElementById('zarf');
+            if(zarflizemin.checked == true){
+                var angle24 = Math.floor(Math.random() * 10);
+                ctx.rotate(angle24 * Math.PI / 180);
+
+                ctx.drawImage(zarf, canvas.width / 2 - zarf.width / 2, canvas.height / 2 - zarf.height / 2 - 50);
+                ctx.rotate(-angle24 * Math.PI / 180);
+            }
+
             //ctx.globalAlpha = 0.5;
             ctx.save();
             ctx.shadowColor = '#555555'; // green for demo purposes
@@ -147,6 +164,7 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
     var ctx = canvas.getContext("2d");
 
     var tercih = loadImage('tercih.png', main);
+    var zarf =  loadImage('zarf.png', main);
 
     var wood1 = loadImage('wood1.jpg', main);
     var wood2 = loadImage('wood2.jpg', main);
