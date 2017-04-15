@@ -26,7 +26,7 @@
     </p>
     <button id="bastan">Baştan başla</button>
     <a id="indir">İndir</a>
-    İsminiz: <input type="text" id="isim" />
+    İsminiz: <input type="text" id="isim" /> Kimlik Yüklemek için: <input type="file" id="imageLoader" name="imageLoader"/>
     <br/>
     <br>
     <canvas id="my-canvas" width="800" height="600"></canvas>
@@ -86,6 +86,18 @@
         }
     }
 
+    function handleImage(e){
+        var reader = new FileReader();
+        reader.onload = function(event){
+            var img = new Image();
+            img.onload = function(){
+                kimlik = img;
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0]);
+    }
+
 
 
     var imagesLoaded = 0;
@@ -100,11 +112,15 @@
     var wood4 = loadImage('wood4.jpg', main);
     var img2 = loadImage('pusula.png', main);
     var papers = loadImage('paper.png', main);
+    var kimlik = null;
 
     var secildi = false;
 
 
     document.addEventListener("DOMContentLoaded", function() {
+
+        var imageLoader = document.getElementById('imageLoader');
+        imageLoader.addEventListener('change', handleImage, false);
 
         canvas.addEventListener('click', function(evt) {
 
@@ -151,6 +167,24 @@
                 ctx.fillText(isim, 60, 60);
                 ctx.restore();
                 secildi = -1;
+            }
+            else if(secildi==true && kimlik!=null){
+                // draw the image
+                // since the context is rotated, the image will be rotated also
+                ctx.save();
+                ctx.translate(x, y);
+
+                var angle3 =  Math.floor(Math.random() * 30);
+                ctx.rotate(angle3*Math.PI/180);
+
+                ctx.shadowColor = '#333333'; // green for demo purposes
+                ctx.shadowBlur = 20;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+                ctx.drawImage(kimlik, 0,0, 332,450);
+
+                ctx.restore();
+
             }
 
 
