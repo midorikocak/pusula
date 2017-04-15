@@ -2,6 +2,7 @@
 
 Midori Kocak tarafından HTML5 ve Javascript kullanılarak yazılmıştır. #HAYIR
 
+![Screenshot](https://github.com/midorikocak/pusula/raw/master/og-image.png)
 Oy pusulası fotoğrafı isteyen işyerleri için, oy pusulası fotoğrafı yapıcı
 
 1. Oy vermek için pusulanın üzerine tıklayın.
