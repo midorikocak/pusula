@@ -61,7 +61,9 @@
 <button id="bastan">Baştan başla</button>
 <a id="indir">İndir</a>
 Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" name="imageLoader"/>
-İsminiz (İsteğe bağlı): <input type="text" id="isim"/> <br/>
+İsminiz (İsteğe bağlı): <input type="text" id="isim"/> <br/><br/>
+
+Özel kağıt, resim, kartvizit yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader2" name="imageLoader2"/><br/>
 <br>
 Zarflı zemin: <input type="checkbox" id="zarf"> Gölge yok: <input type="checkbox" id="golge">
 <br>
@@ -176,6 +178,17 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge yok: <input type="checkb
         reader.readAsDataURL(e.target.files[0]);
     }
 
+    function handleImage2(e) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var img = new Image();
+            img.onload = function () {
+                ozel = img;
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0]);
+    }
 
     var imagesLoaded = 0;
     var canvas = document.getElementById("my-canvas");
@@ -204,6 +217,10 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge yok: <input type="checkb
 
     var kimlik = null;
     var kimlikResimde = false;
+
+    var ozel = null;
+    var ozelResimde = false;
+
     var isimResimde = false;
 
     var secildi = false;
@@ -213,6 +230,10 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge yok: <input type="checkb
 
         var imageLoader = document.getElementById('imageLoader');
         imageLoader.addEventListener('change', handleImage, false);
+
+        var imageLoader2 = document.getElementById('imageLoader2');
+        imageLoader2.addEventListener('change', handleImage2, false);
+
 
         canvas.addEventListener('click', function (evt) {
 
@@ -278,6 +299,24 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge yok: <input type="checkb
                 ctx.restore();
                 kimlikResimde = true;
             }
+            else if (secildi == true && ozel != null && ozelResimde == false) {
+                // draw the image
+                // since the context is rotated, the image will be rotated also
+                ctx.save();
+                ctx.translate(x, y);
+
+                var angle3 = Math.floor(Math.random() * 30);
+                ctx.rotate(angle3 * Math.PI / 180);
+
+                ctx.shadowColor = '#000'; // green for demo purposes
+                ctx.shadowBlur = shadowBlur;
+                ctx.shadowOffsetX = shadowOffsetX;
+                ctx.shadowOffsetY = shadowOffsetY;
+                ctx.drawImage(ozel, 0, 0);
+
+                ctx.restore();
+                ozelResimde = true;
+            }
 
 
         }, false);
@@ -290,6 +329,7 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge yok: <input type="checkb
         secildi = false;
         kimlikResimde = false;
         isimResimde = false;
+        ozelResimde = false;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawCanvas();
     });
