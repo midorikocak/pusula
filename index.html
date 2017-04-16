@@ -42,6 +42,9 @@
         Oy vermek için pusulanın üzerine tıklayın.
     </li>
     <li>
+        Pusulayı, evet mührünü, zarfı, kartvizit ve kimliği sürükle bırak özelliğiyle hareket ettirebilirsiniz.
+    </li>
+    <li>
         İsim yazmak için, isminizi yazdıktan sonra ismin görünmesini istediğiniz yere tıklayın
     </li>
     <li>
@@ -134,10 +137,10 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
 
     function main() {
         if(++imagesLoaded < 12) return;
-        
+
         imgs = [];
         var angle = Math.floor(Math.random() * 10);
-        
+
         var bgImgs = [wood1, wood2, wood3, wood4, wood5, wood6, wood7, wood8];
         oybackground = bgImgs[Math.floor(Math.random() * bgImgs.length)];
 
