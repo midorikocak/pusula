@@ -222,6 +222,7 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
         imageLoader2.addEventListener('change', handleImage2, false);
 
         canvas.addEventListener('click', function (evt) {
+            console.log(evt);
             var rect = canvas.getBoundingClientRect();
             var x = evt.clientX - rect.left;
             var y = evt.clientY - rect.top;
@@ -268,14 +269,11 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
         drawCanvas();
         }, false);
 
-        canvas.addEventListener('mousedown', function (evt) {
+        function startDrag(x, y){
             var i;
-            var rect = canvas.getBoundingClientRect();
-            var canvasX = evt.clientX - rect.left;
-            var canvasY = evt.clientY - rect.top;
             for (i=0; i<imgs.length; i++) {
                 if (imgs[i].drag == false) continue;
-                var rot = rotatePoint(canvasX - imgs[i].x, canvasY - imgs[i].y, imgs[i].angle*-1);
+                var rot = rotatePoint(x - imgs[i].x, y - imgs[i].y, imgs[i].angle*-1);
                 var imageX = rot.x;
                 var imageY = rot.y;
                 if (imageX < 0 || imageX > imgs[i].w || imageY < 0 || imageY > imgs[i].h) continue; /* click is outside image */
@@ -283,23 +281,51 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
                 grab.img = imgs[i];
                 grab.origX = imgs[i].x;
                 grab.origY = imgs[i].y;
-                grab.origMouseX = evt.clientX;
-                grab.origMouseY = evt.clientY;
+                grab.origMouseX = x;
+                grab.origMouseY = y;
             }
             drawCanvas();
-        });
-        
-        canvas.addEventListener('mouseup', function (evt) {
-            grab = null;
-            drawCanvas();
-        });
-        
-        canvas.addEventListener('mousemove', function (evt) {
+        }
+        function drag(x, y){
             if (grab != null) {
-                grab.img.x = grab.origX - (grab.origMouseX - evt.clientX);
-                grab.img.y = grab.origY - (grab.origMouseY - evt.clientY);
+                grab.img.x = grab.origX - (grab.origMouseX - x);
+                grab.img.y = grab.origY - (grab.origMouseY - y);
                 drawCanvas();
             }
+        }
+        function endDrag(){
+            grab = null;
+            drawCanvas();
+        }
+
+        canvas.addEventListener('mousedown', function (evt) {
+            var rect = canvas.getBoundingClientRect();
+            startDrag(evt.clientX - rect.left, evt.clientY - rect.top);
+        });
+        canvas.addEventListener('mousemove', function (evt) {
+            var rect = canvas.getBoundingClientRect();
+            drag(evt.clientX - rect.left, evt.clientY - rect.top);
+        });
+        canvas.addEventListener('mouseup', function (evt) {
+            endDrag();
+        });
+
+        canvas.addEventListener('touchstart', function (evt) {
+            var rect = canvas.getBoundingClientRect();
+            startDrag(evt.touches[0].pageX - rect.left, evt.touches[0].pageY - rect.top);
+            evt.preventDefault();
+        });
+        canvas.addEventListener('touchmove', function (evt) {
+            var rect = canvas.getBoundingClientRect();
+            drag(evt.changedTouches[0].pageX - rect.left, evt.changedTouches[0].pageY - rect.top);
+            evt.preventDefault();
+        });
+        canvas.addEventListener('touchend', function (evt) {
+            endDrag();
+            /* send click event anyway */
+            var event = new MouseEvent('click',
+            			{clientX: evt.changedTouches[0].clientX, clientY: evt.changedTouches[0].clientY});
+            canvas.dispatchEvent(event);
         });
 
         var golge = document.getElementById('golge');
