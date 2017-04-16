@@ -132,19 +132,14 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
         return img;
     }
 
-    document.getElementById("golge").addEventListener("onchange", function () {
-        if (this.checked) {
-            shadowBlur = 5; shadowOffsetX = 1; shadowOffsetY = 1;
-        } else {
-            shadowBlur = 0; shadowOffsetX = 0; shadowOffsetY = 0;
-        }
-    });
-
     function main() {
+        if(imagesLoaded++ < 10) return;
+        
+        imgs = [];
         var angle = Math.floor(Math.random() * 10);
         
-        var imgs = [wood1, wood2, wood3, wood4, wood5, wood6, wood7, wood8];
-        oybackground = imgs[Math.floor(Math.random() * imgs.length)];
+        var bgImgs = [wood1, wood2, wood3, wood4, wood5, wood6, wood7, wood8];
+        oybackground = bgImgs[Math.floor(Math.random() * bgImgs.length)];
 
         bg = new Img(-100, -100, oybackground.width, oybackground.height,
             			5*Math.PI/180, false, oybackground);
@@ -153,7 +148,7 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
         var zarflizemin = document.getElementById('zarf');
         if(zarflizemin.checked == true){
             var angle24 = Math.floor(Math.random() * 10);
-            var distance = angle24 * 20;
+            var d = angle24 * 20;
             envelope = new Img(canvas.width/2 - zarf.width/2 + d, canvas.height/2 - zarf.height/2 + d,
                 					zarf.width, zarf.height, -angle24 * Math.PI/180, true, zarf);
             envelope.drawFunc = function(){ drawShadow(envelope, '#000'); }
@@ -162,6 +157,8 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
         ballot = new Img(canvas.width/2 - img2.width/2, canvas.height/2 - img2.height/2 - 50,
             				img2.width, img2.height, angle*Math.PI/180, true, img2);
         ballot.drawFunc = function(){ drawShadow(ballot, '#000'); }
+
+        drawCanvas();
     }
 
     function handleImage(e) {
@@ -189,22 +186,18 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
     }
 
     var imagesLoaded = 0;
-
-    var tercih = loadImage('tercih.png', null);
-    var zarf =  loadImage('zarf.png', null);
-    var wood1 = loadImage('wood1.jpg', null);
-    var wood2 = loadImage('wood2.jpg', null);
-    var wood3 = loadImage('wood3.jpg', null);
-    var wood4 = loadImage('wood4.jpg', null);
-    var wood5 = loadImage('wood5.jpg', null);
-    var wood6 = loadImage('wood6.jpg', null);
-    var wood7 = loadImage('wood7.jpg', null);
-    var wood8 = loadImage('wood8.jpg', null);
-    var img2 = loadImage('pusula.png', null);
-    var papers = loadImage('paper.png', null);
-    main();
-
-    var golge = document.getElementById('golge');
+    var tercih = loadImage('tercih.png', main);
+    var zarf =  loadImage('zarf.png', main);
+    var wood1 = loadImage('wood1.jpg', main);
+    var wood2 = loadImage('wood2.jpg', main);
+    var wood3 = loadImage('wood3.jpg', main);
+    var wood4 = loadImage('wood4.jpg', main);
+    var wood5 = loadImage('wood5.jpg', main);
+    var wood6 = loadImage('wood6.jpg', main);
+    var wood7 = loadImage('wood7.jpg', main);
+    var wood8 = loadImage('wood8.jpg', main);
+    var img2 = loadImage('pusula.png', main);
+    var papers = loadImage('paper.png', main);
 
     var shadowBlur = 0;
     var shadowOffsetX = 0;
@@ -228,14 +221,11 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
         var imageLoader2 = document.getElementById('imageLoader2');
         imageLoader2.addEventListener('change', handleImage2, false);
 
-
         canvas.addEventListener('click', function (evt) {
-
             var rect = canvas.getBoundingClientRect();
             var x = evt.clientX - rect.left;
             var y = evt.clientY - rect.top;
 
-            console.log('x:' + x + ' y:' + y);
             var angle2 = Math.floor(Math.random() * 50);
 
             var isim = document.getElementById('isim').value;
@@ -310,6 +300,17 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
                 drawCanvas();
             }
         });
+
+        var golge = document.getElementById('golge');
+        golge.onchange = function () {
+            if (golge.checked) {
+                window.shadowBlur = 5; window.shadowOffsetX = 1; window.shadowOffsetY = 1;
+            } else {
+                window.shadowBlur = 0; window.shadowOffsetX = 0; window.shadowOffsetY = 0;
+            }
+            drawCanvas();
+        };
+
         drawCanvas();
     });
 
