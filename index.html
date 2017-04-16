@@ -133,7 +133,7 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
     }
 
     function main() {
-        if(imagesLoaded++ < 10) return;
+        if(++imagesLoaded < 12) return;
         
         imgs = [];
         var angle = Math.floor(Math.random() * 10);
