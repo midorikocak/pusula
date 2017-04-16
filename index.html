@@ -312,12 +312,12 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
 
         canvas.addEventListener('touchstart', function (evt) {
             var rect = canvas.getBoundingClientRect();
-            startDrag(evt.touches[0].pageX - rect.left, evt.touches[0].pageY - rect.top);
+            startDrag(evt.touches[0].clientX - rect.left, evt.touches[0].clientY - rect.top);
             evt.preventDefault();
         });
         canvas.addEventListener('touchmove', function (evt) {
             var rect = canvas.getBoundingClientRect();
-            drag(evt.changedTouches[0].pageX - rect.left, evt.changedTouches[0].pageY - rect.top);
+            drag(evt.changedTouches[0].clientX - rect.left, evt.changedTouches[0].clientY - rect.top);
             evt.preventDefault();
         });
         canvas.addEventListener('touchend', function (evt) {
