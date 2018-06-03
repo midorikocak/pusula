@@ -1,4 +1,4 @@
-### Oy pusulası fotoğrafı yapıcı
+### Oy pusulası fotoğrafı yapıcı - 24 Haziran
 
 Midori Kocak tarafından HTML5 ve Javascript kullanılarak yazılmıştır. #HAYIR
 
