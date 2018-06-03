@@ -1,6 +1,6 @@
 ### Oy pusulası fotoğrafı yapıcı - 24 Haziran
 
-Midori Kocak tarafından HTML5 ve Javascript kullanılarak yazılmıştır. #HAYIR
+Midori Kocak tarafından HTML5 ve Javascript kullanılarak yazılmıştır. #T A M A M
 
 ![Screenshot](24haziran.png)
 Oy pusulası fotoğrafı isteyen işyerleri için, oy pusulası fotoğrafı yapıcı
