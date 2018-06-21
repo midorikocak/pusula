@@ -110,11 +110,12 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
     var imgs = [], grab
     var shadowBlur = 0, shadowOffsetX = 0, shadowOffsetY = 0
 
-    cb.addEventListener('click', function () {
+    var cbSelector = document.getElementById('cb')
+    cbSelector.addEventListener('click', function () {
         changeBallot(false);
     });
-
-    mv.addEventListener('click', function () {
+    var mvSelector = document.getElementById('mv')
+    mvSelector.addEventListener('click', function () {
         changeBallot(true);
     });
 
