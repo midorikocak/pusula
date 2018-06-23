@@ -79,7 +79,7 @@ Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" n
 Özel kağıt, resim, kartvizit yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader2"
                                                                   name="imageLoader2"/><br/>
 <br>
-Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkbox" id="golge">
+Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkbox" id="golge"> Filtre var: <input type="checkbox" id="filterCheck" checked>
 <br>
 <form>
     <p>Pusula Türü:</p>
@@ -139,6 +139,15 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
         ctx.save()
         ctx.translate(img.x, img.y)
         ctx.rotate(img.angle)
+        ctx.drawImage(img.loadedImage, 0, 0, img.w, img.h)
+        ctx.restore()
+    }
+
+    function drawFilter(img) {
+        ctx.save()
+        ctx.translate(img.x, img.y)
+        ctx.rotate(img.angle)
+        ctx.globalCompositeOperation = 'multiply';
         ctx.drawImage(img.loadedImage, 0, 0, img.w, img.h)
         ctx.restore()
     }
@@ -207,6 +216,16 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
             drawShadow(ballot, '#000')
         }
 
+
+
+        var filterCheck = document.getElementById('filterCheck')
+        if (filterCheck.checked == true) {
+            var filterImage  = new Img(0, 0, filter.width, filter.height,
+                0, false, filter)
+            filterImage.drawFunc = function () {
+                drawFilter(filterImage)
+            }
+        }
         // ballot2 = new Img(canvas.width / 2 - img3.width / 2, canvas.height / 2 - img3.height / 2 - 50,
         //   img3.width, img3.height, angle2 * Math.PI / 180, true, img3)
         // ballot2.drawFunc = function () { drawShadow(ballot2, '#000') }
@@ -263,6 +282,7 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
     var wood9 = loadImage('wood9.jpg', main)
     var wood10 = loadImage('wood10.jpg', main)
     var wood11 = loadImage('wood11.jpg', main)
+    var filter = loadImage('filter.jpg', main)
     var cb = loadImage('cb.png', main)
     var mv = loadImage('milletvekili.png', main);
     var img2 = cb
