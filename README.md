@@ -1,6 +1,6 @@
-### Oy pusulası fotoğrafı yapıcı - 24 Haziran
+### Oy pusulası fotoğrafı yapıcı - 14 MAYIS
 
-Midori Kocak tarafından HTML5 ve Javascript kullanılarak yazılmıştır. #T A M A M
+Midori Kocak tarafından HTML5 ve Javascript kullanılarak yazılmıştır. 1 OY Kemal'e 1 Oy Tip'e
 
 ![Screenshot](24haziran.png)
 Oy pusulası fotoğrafı isteyen işyerleri için, oy pusulası fotoğrafı yapıcı
