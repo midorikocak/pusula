@@ -349,7 +349,7 @@ Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkb
             }
             else if (secildi == true && kimlik != null && kimlikResimde == false) {
                 var angle3 = Math.floor(Math.random() * 30)
-                idcard = new Img(x, y, 175, 110, angle3 * Math.PI / 180, true, kimlik)
+                idcard = new Img(x, y, 262, 165, angle3 * Math.PI / 180, true, kimlik)
                 idcard.drawFunc = function () {
                     drawShadow(idcard, '#000')
                 }
