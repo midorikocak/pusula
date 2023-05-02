@@ -1,39 +1,225 @@
-body {
-  height: 100%;
-  width: 100%;
-  color: #121212;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+@charset "utf-8";
+html,body{
+    padding-top:20px;
+    display:grid;
+    text-align: center;
+    justify-items: center;
+    font-family: 'Righteous', sans-serif;
+    background: linear-gradient(to bottom, rgb(188, 113, 0), rgb(88, 1, 122));
+    color: rgba(255, 255, 255, 0.872);
+    
+}
+#twitterLink
+{
+    color:#FD9700;
+}
+#my-canvas {
+    border: 1px solid #ababab;
+    font-family: 'AHundredMiles', 'Indie Flower', cursive;
+    color: blue;
 }
 
-.checkboxes {
-  display: flex;
-  flex-direction: row;
-  -moz-column-gap: 7px;
-       column-gap: 7px;
+#indir {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+#titleDiv
+{
+    background-color: rgb(0,0,0,0.6);
+    padding-bottom:20px;
+    margin-bottom: 50px;
+    border: 1px solid rgb(0,0,0,0.6);
+    border-radius: 5px;
+    width: 50%;
+}
+#descriptionDiv
+{
+    background-color: rgb(0,0,0,0.6);
+    border: 1px solid rgb(0,0,0,0.6);
+    border-radius: 5px;
+    width: 50%;
+    margin-bottom: 50px;
+    
+}
+#envelope
+{
+    width: 12px;
+    height: 12px;
+}
+#uploaderDiv
+{
+    background-color: rgb(0,0,0,0.6);
+    border: 1px solid rgb(0,0,0,0.6);
+    border-radius: 5px;
+    width: 50%;
+    height: 220px;
+    margin-bottom: 50px;
+}
+#imageLoader
+{
+    display:none;
+}
+#imageLoader2
+{
+    display:none;
+}
+#idUploader
+{
+    height: 100px;
+}
+#uploaderText
+{
+    margin-bottom:25px;
+}
+.idUploaderLabel
+{
+    color:#FD9700;
+    padding:8px;
+    cursor:pointer;
+    border: 2px solid #FD9700;
+    border-radius: 30px;
+}
+#addImage
+{
+    color:#FD9700;
+    width: 13px;
+    height: 13px;
+}
+#filterDiv
+{
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(0,0,0,0.6);
+    border: 1px solid rgb(0,0,0,0.6);
+    border-radius: 5px;
+    width: 50%;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom:50px;
+}
+#emptySquare
+{
+    width: 32px;
+    height: 32px;
+    margin: 0;
+}
+.displayNone
+{
+    display:none;
+}
+#envDiv
+{
+    display: flex;
+    flex-direction: column;
+}
+.flexMargin
+{
+    margin-right: 150px;
+}
+#formDiv
+{
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(0,0,0,0.6);
+    border: 1px solid rgb(0,0,0,0.6);
+    border-radius: 5px;
+    width: 50%;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+#formDivTitle
+{
+    font-size:30px; 
+    letter-spacing: 5px;
+    margin-bottom:20px;
+}
+#radioDiv
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+}
+#nameDiv
+{
+    background-color: rgb(0,0,0,0.6);
+    border: 1px solid rgb(0,0,0,0.6);
+    border-radius: 5px;
+    width: 50%;
+    height: 150px;
+    margin-bottom: 50px;
+}
+#indir
+{
+    color :rgb(188, 113, 0);
+}
+#bastan
+{
+    cursor:pointer;
+    font-family: 'Righteous', sans-serif;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0);
+    color : white;
+    border: 2px solid #FD9700;
+    border-radius: 30px;
+    padding: 7px;
+    margin-top:10px;
+}
+.radio-label 
+{
+    display: flex;
+    align-items: center;
+    margin:7px;
+}
+  
+.radio-input 
+{
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+.radio-icon 
+{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 2px solid #FD9700;
+    border-radius: 50%;
+}
+  
+.radio-input:checked + .radio-icon 
+{
+background-color: #FD9700;
 }
 
-input {
-  padding: 5px;
+.radio-label:hover .radio-icon 
+{
+border-color: #e100ff87;
+cursor: pointer;
 }
 
-input[type=text],
-input[type=file] {
-  margin-top: 5px;
+.radio-label:hover .radio-input:not(:checked) + .radio-icon 
+{
+border-color: #e100ff87;
 }
 
-button {
-  padding: 7px 15px;
+.isimInputBox
+{
+    color:white;
+    font-family: "Rubik" , sans-serif;
+    outline: none;
+    border: 0px solid;
+    border-radius: 50px;
+    width: 300px;
+    height: 30px;
+    background-color: rgba(31, 31, 31, 0.59);
+    padding-left:15px;
 }
-
-a {
-  padding: 5px;
-}
-
-@media (max-width: 740px) {
-  body {
-    margin: 1rem;
-  }
-}/*# sourceMappingURL=style.css.map */
