@@ -1,0 +1,40 @@
+$font-main: #121212;
+
+body {
+    height: 100%;
+    width: 100%;
+    color: $font-main;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkboxes {
+    display: flex;
+    flex-direction: row;
+    column-gap: 7px;
+}
+
+input {
+    padding: 5px;
+}
+
+input[type="text"],
+input[type="file"] {
+    margin-top: 5px;
+}
+
+button {
+    padding: 7px 15px;
+}
+
+a {
+    padding: 5px;
+}
+
+@media (max-width: 740px) {
+    body {
+        margin: 1rem;
+    }
+}
