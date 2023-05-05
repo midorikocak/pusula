@@ -1,115 +1,50 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Oy Pusulası Yapıcı</title>
-    <script src="https://kit.fontawesome.com/f209ed8b1a.js" crossorigin="anonymous"></script>
+
+    <!-- CSS Reset -->
     <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+
+    <!-- You should properly set the path from the main file. -->
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
     <meta property="og:title" content="Oy Pusulası Fotoğrafı Yapıcı"/>
     <meta property="og:image" content="https://akkermansia.github.io/pusula/og-image.png"/>
     <meta property="og:description"
           content="Oy pusulası fotoğrafı isteyen işyerleri için, oy pusulası fotoğrafı yapıcı"/>
     <meta property="og:url" content="https://akkermansia.github.io/pusula"/>
-    <link rel="stylesheet" href="style.css">
-    <script src = "script.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Rubik:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
 </head>
+<style>
+    @charset "utf-8";
+    body{
+        margin: 1rem;
+    }
+    @font-face {
+        font-family: 'AHundredMiles';
+        src: url('source/fonts/AHundredMiles.ttf');
+    }
 
+    #my-canvas {
+        border: 1px solid #ababab;
+        font-family: 'AHundredMiles', 'Indie Flower', cursive;
+        color: blue;
+    }
+
+    #indir {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+</style>
 <body>
-    <div id = "titleDiv">
-        <div >
-            <h1 >Oy pusulası fotoğrafı yapıcı 14 Mayıs</h1>
-            <a id = "twitterLink" href="https://www.twitter.com/midorikocak" target = "_blank">Midori Kocak</a> tarafından HTML5 ve Javascript kullanılarak yazılmıştır.
-            <p>(1 Oy Kemal'e 1 Oy Tip'e)</p>
-        </div>
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-            <input type="hidden" name="cmd" value="_s-xclick">
-            <input type="hidden" name="hosted_button_id" value="7N3QMNGG26ZYC">
-            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-        </form>
-    </div>
-
-
-    <div id = "descriptionDiv">
-        <p>Oy pusulası fotoğrafı isteyen işyerleri için, oy pusulası fotoğrafı yapıcı</p>
-        <div>
-            <p><img id = "envelope" src="/source/textures/envelope.png"> Oy vermek için pusulanın üzerine tıklayın.</p>
-        </div>
-        <div>
-            <p><img id = "envelope" src="/source/textures/envelope.png"> Pusulayı, evet mührünü, zarfı, kartvizit ve kimliği sürükle bırak özelliğiyle hareket ettirebilirsiniz.</p>
-        </div>
-        <div>
-            <p><img id = "envelope" src="/source/textures/envelope.png"> İsim yazmak için, isminizi yazdıktan sonra ismin görünmesini istediğiniz yere tıklayın
-                Resme kimlik koymak için, kimlik yükledikten sonra kimliğin görünmesini istediğiniz yere tıklayın </p>
-        </div>
-        <div>
-            <p><img id = "envelope" src="/source/textures/envelope.png"> Mobilden inmiyorsa ekran resmi alın.</p>
-        </div>
-        <div>
-            <p><img id = "envelope" src="/source/textures/envelope.png"> Masanın üzerinde zarf olsun istiyorsanız, zarf kutusunu işaretleyin. Baştan başlaya tıklayın.</p>
-        </div>
-    </div>
-    <div id = "uploaderDiv">
-        <div id = "idUploader">
-            <p id = "uploaderText">Kimlik Yüklemek için (İsteğe bağlı): </p>
-            <label for = "imageLoader" class = "idUploaderLabel">
-                <img id = "addImage" src ="/source/textures/file-upload.png"> Dosya Seç!
-            </label>
-            <input type="file" id="imageLoader" name="imageLoader"/>
-        </div>
-        <div id = "imageUploader">
-            <p id = "uploaderText">Özel kağıt, resim, kartvizit yüklemek için (İsteğe bağlı): </p>
-            <label for = "imageLoader2" class = "idUploaderLabel" >
-                <img id = "addImage" src ="/source/textures/file-upload.png"> Dosya Seç!
-            </label>
-            <input type="file" id="imageLoader2" name="imageLoader2"/>
-           
-        </div>
-        
-    </div>
-    <div class="checkboxes">
-Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkbox" id="golge"> Filtre var: <input type="checkbox" id="filterCheck" checked>
-    </div>
-
-    <div id = "formDiv">
-        <form>
-            <div id = "formDivTitle">
-                Pusula Türü
-            </div>
-            <div id = "radioDiv">
-                <label class="radio-label">
-                    <input type="radio" name="contact" class="radio-input" id = "cb" value = "cb"/>
-                    <span class="radio-icon"></span>
-                    Cumhurbaşkanı
-                  </label>
-                  <label class="radio-label">
-                    <input type="radio" name="contact" class="radio-input" id = "mv" value = "mv"/>
-                    <span class="radio-icon"></span>
-                    Milletvekili
-                  </label>
-            </div>
-        </form>
-    </div>
-    <div id = "nameDiv">
-        <p>İsminiz (İsteğe bağlı)</p>
-        <div>
-            <input class = "isimInputBox" type="text" id="isim" placeholder="İsim">
-            <a id="indir">İndir</a>
-        </div>
-        <div>
-            <button id="bastan">Baştan başla</button>
-        </div>
-            
-    </div>
-    
-
-    <div>
-        <canvas id="my-canvas" width="800" height="600"></canvas>
-    </div>
-Destek için:
+<h1>Oy pusulası fotoğrafı yapıcı 14 Mayıs</h1>
+<a href="https://www.twitter.com/midorikocak">Midori Kocak</a> tarafından HTML5 ve Javascript kullanılarak yazılmıştır.
+1 Oy Kemal'e 1 Oy Tip'e
+<br><br>
+Destek için:<br><br>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
     <input type="hidden" name="cmd" value="_s-xclick">
     <input type="hidden" name="hosted_button_id" value="7N3QMNGG26ZYC">
@@ -117,6 +52,63 @@ Destek için:
            alt="PayPal - The safer, easier way to pay online!">
     <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 </form>
+<p>
+    Oy pusulası fotoğrafı isteyen işyerleri için, oy pusulası fotoğrafı yapıcı<br/>
+<ul>
+    <li>
+        Oy vermek için pusulanın üzerine tıklayın.
+    </li>
+    <li>
+        Pusulayı, evet mührünü, zarfı, kartvizit ve kimliği sürükle bırak özelliğiyle hareket ettirebilirsiniz.
+    </li>
+    <li>
+        İsim yazmak için, isminizi yazdıktan sonra ismin görünmesini istediğiniz yere tıklayın
+    </li>
+    <li>
+        Resme kimlik koymak için, kimlik yükledikten sonra kimliğin görünmesini istediğiniz yere tıklayın
+    </li>
+    <li>
+        Mobilden inmiyorsa ekran resmi alın.
+    </li>
+    <li>
+        Masanın üzerinde zarf olsun istiyorsanız, zarf kutusunu işaretleyin. Baştan başlaya tıklayın.
+    </li>
+    <li>
+        Baştan başlaya tıklayınca zemin değişir.
+    </li>
+</ul>
+</p>
+Kimlik Yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader" name="imageLoader"/>
+<br/><br/>
+
+Özel kağıt, resim, kartvizit yüklemek için (İsteğe bağlı): <input type="file" id="imageLoader2"
+                                                                  name="imageLoader2"/><br/>
+<br>
+<div class="checkboxes">
+Zarflı zemin: <input type="checkbox" id="zarf"> Gölge var: <input type="checkbox" id="golge"> Filtre var: <input type="checkbox" id="filterCheck" checked></div>
+<br>
+<form>
+    <p>Pusula Türü:</p>
+    <div>
+        <input type="radio" id="cb"
+               name="contact" value="cb">
+        <label for="cb">Cumhurbaşkanı</label>
+
+        <input type="radio" id="mv"
+               name="contact" value="mv">
+        <label for="mv">Milletvekili</label>
+    </div>
+</form>
+<br>
+
+İsminiz (İsteğe bağlı): <input type="text" id="isim"/>
+<br>
+<br>
+<button id="bastan">Baştan başla</button>
+<a id="indir">İndir</a>
+<br>
+<br>
+<canvas id="my-canvas" width="800" height="600"></canvas>
 </body>
 <script>
     var canvas = document.getElementById('my-canvas')
